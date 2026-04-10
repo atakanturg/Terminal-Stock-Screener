@@ -7,7 +7,7 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
-app.use(express.static(path.join(__dirname, '../public')));
+app.use(express.static(path.join(__dirname, 'static')));
 
 const TV_URL = 'https://scanner.tradingview.com/america/scan';
 
@@ -154,6 +154,7 @@ app.get('/api/premade/:screener_id', async (req, res) => {
     }
 });
 
-// Export the app for Vercel
-module.exports = app;
-
+const PORT = process.env.PORT || 8000;
+app.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}`);
+});
