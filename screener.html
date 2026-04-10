@@ -78,7 +78,7 @@
         <section class="content-area glass-panel">
             <div class="results-header">
                 <div class="status-box">
-                    <div id="statusLine">AWAITING TELEMETRY...</div>
+                    <div id="statusLine" style="color: var(--accent-blue);">V2.1 ACTIVE</div>
                 </div>
                 <div class="metric-badge" id="countLine">0 DATASETS</div>
             </div>
@@ -201,6 +201,20 @@
                         <div class="f-custom-group" style="display: none; flex: 1; gap: 5px;">
                             <select class="glass-input f-op" style="flex: 1; padding: 5px;"><option value=">">&gt;</option><option value="<">&lt;</option><option value=">=">&gt;=</option><option value="<=">&lt;=</option></select>
                             <input type="number" class="glass-input f-val" placeholder="Val" style="flex: 2; padding: 5px;">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="filter-row">
+                    <label style="font-family: var(--font-mono); font-size: 0.8rem; font-weight: bold;">SECTOR</label>
+                    <div style="display: flex; gap: 10px; margin-top: 5px;">
+                        <input type="hidden" class="f-field" value="sector">
+                        <select class="glass-input f-premade" style="flex: 1;">
+                            <option value="any">Any</option><option value="equal|Technology">Technology</option><option value="equal|Finance">Finance</option><option value="equal|Health Technology">Health Tech</option><option value="equal|Energy Minerals">Energy</option><option value="equal|Retail Trade">Retail</option><option value="custom">Custom</option>
+                        </select>
+                        <div class="f-custom-group" style="display: none; flex: 1; gap: 5px;">
+                            <select class="glass-input f-op" style="flex: 1; padding: 5px; display: none;"><option value="equal">==</option></select>
+                            <input type="text" class="glass-input f-val" placeholder="e.g. Technology" style="flex: 2; padding: 5px;">
                         </div>
                     </div>
                 </div>

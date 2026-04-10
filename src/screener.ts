@@ -37,9 +37,36 @@ const COLS = {
 let currentScreener = 'top_gainers';
 let exchangeFilter = 'ALL';
 
+const TABLE_HEADERS = [
+    { label: 'SYMBOL', tooltip: 'Unique ticker symbol.' },
+    { label: 'NAME', tooltip: 'Company description.' },
+    { label: 'PRICE', tooltip: 'Last traded price.' },
+    { label: 'CHG%', tooltip: 'Daily % change.' },
+    { label: 'MKT CAP', tooltip: 'Company valuation.' },
+    { label: 'P/E', tooltip: 'Price-to-Earnings ratio.' },
+    { label: 'EPS GRW', tooltip: 'EPS growth YoY.' },
+    { label: 'DIV YLD', tooltip: 'Dividend Yield.' },
+    { label: 'SECTOR', tooltip: 'Industrial sector.' }
+];
+
 document.addEventListener('DOMContentLoaded', () => {
+    initTableHeaders();
     initApp();
 });
+
+function initTableHeaders() {
+    const thead = document.getElementById('tableHeaders');
+    if (thead) {
+        thead.innerHTML = TABLE_HEADERS.map(col => `
+            <th>
+                <div class="th-content">
+                    ${col.label}
+                    <span class="tooltip-icon" data-tooltip="${col.tooltip}">?</span>
+                </div>
+            </th>
+        `).join('');
+    }
+}
 
 function initApp() {
     // Nav Click Handlers
@@ -128,20 +155,22 @@ function renderTable(symbols: TVSymbolData[]) {
         row.innerHTML = `
             <td class="ticker-col">
                 ${ticker}
-                <a href="https://finance.yahoo.com/quote/${ticker}" target="_blank" class="badge" style="margin-left:8px; text-decoration:none; cursor:pointer;">[News]</a>
+                <a href="https://finance.yahoo.com/quote/${ticker}" target="_blank" style="font-size: 0.7rem; color: var(--accent-blue); text-decoration: none; margin-left: 5px;" title="View on Yahoo Finance">[News]</a>
             </td>
             <td>${d[COLS.NAME]}</td>
-            <td class="${changeClass}">${d[COLS.PRICE].toFixed(2)}</td>
-            <td class="${changeClass}">${change.toFixed(2)}%</td>
+            <td class="${changeClass}">${d[COLS.PRICE] != null ? '$' + d[COLS.PRICE].toFixed(2) : '—'}</td>
+            <td class="${changeClass}">${formatPct(change)}</td>
             <td>${formatMarketCap(d[COLS.MARKET_CAP])}</td>
-            <td>${d[COLS.PE]?.toFixed(1) || 'N/A'}</td>
-            <td>${d[COLS.EPS_GROWTH]?.toFixed(1)}%</td>
-            <td>${d[COLS.DIV_YIELD]?.toFixed(2)}%</td>
-            <td>${d[COLS.SECTOR]}</td>
+            <td>${d[COLS.PE] != null ? d[COLS.PE].toFixed(2) : '—'}</td>
+            <td>${d[COLS.EPS_GROWTH] != null ? formatPct(d[COLS.EPS_GROWTH]) : '—'}</td>
+            <td>${d[COLS.DIV_YIELD] != null ? d[COLS.DIV_YIELD].toFixed(2) + '%' : '—'}</td>
+            <td>${d[COLS.SECTOR] || '—'}</td>
         `;
         tbody.appendChild(row);
     });
 }
+
+function formatPct(num: number) { return (num >= 0 ? '+' : '') + num.toFixed(2) + '%'; }
 
 function formatMarketCap(val: number) {
     if (!val) return 'N/A';
@@ -188,20 +217,25 @@ function closeCustomModal() {
         const customInput = customContainer?.querySelector('.f-val') as HTMLInputElement;
         const opSelect = customContainer?.querySelector('.f-op') as HTMLSelectElement;
 
-        let val;
+        let val: number | string | undefined;
         let op = '>';
         if (premade.value === 'custom') {
-            val = parseFloat(customInput.value);
+            val = customInput.value;
+            // parse to float if it's not a string-based field like sector
+            if (field !== 'sector') val = parseFloat(val);
             op = opSelect.value;
         } else if (premade.value !== 'any') {
             const parts = premade.value.split('|');
             if (parts.length === 2) {
                 op = parts[0];
-                val = parseFloat(parts[1]);
+                val = parts[1];
+                if (field !== 'sector') val = parseFloat(val);
             }
         }
 
-        if (val !== undefined && !isNaN(val) && field) {
+        const isValidValue = val !== undefined && (typeof val === 'string' ? val.trim() !== '' : !isNaN(val));
+
+        if (isValidValue && field) {
             filters.push({ field, op: op, value: val });
         }
     });
