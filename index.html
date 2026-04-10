@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TERMINAL SCREENER | Home</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        .home-container {
+            max-width: 800px;
+            margin: 60px auto;
+            padding: 2rem;
+        }
+        
+        .home-title {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            letter-spacing: -1px;
+        }
+
+        .home-description {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 3rem;
+        }
+
+        .go-to-screener {
+            display: inline-block;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-main);
+            text-decoration: none;
+            margin-bottom: 4rem;
+            transition: transform 0.2s ease, color 0.2s ease;
+        }
+
+        .go-to-screener:hover {
+            color: var(--accent-blue);
+            transform: scale(1.05);
+        }
+
+        .resources-grid {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .resource-card {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .resource-card h3 {
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            color: var(--text-main);
+        }
+
+        .resource-card ul {
+            list-style: none;
+        }
+
+        .resource-card li {
+            margin-bottom: 0.5rem;
+        }
+
+        .resource-card a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .resource-card a:hover {
+            color: var(--accent-blue);
+        }
+    </style>
+</head>
+<body>
+    <div class="background-effects">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+
+    <header class="glass-panel" style="justify-content: center;">
+        <div class="logo">TERMINAL SCREENER</div>
+    </header>
+
+    <main style="overflow: auto;">
+        <div class="home-container">
+            <h1 class="home-title">Equity research made easy.</h1>
+
+            <a href="screener.html" class="go-to-screener">Go to Screener &rarr;</a>
+
+            <div class="resources-grid">
+                <div class="resource-card">
+                    <h3>News & Market Data</h3>
+                    <ul>
+                        <li><a href="https://finance.yahoo.com/" target="_blank">Yahoo Finance</a></li>
+                        <li><a href="https://www.bloomberg.com/" target="_blank">Bloomberg</a></li>
+                        <li><a href="https://www.reuters.com/markets/" target="_blank">Reuters Markets</a></li>
+                    </ul>
+                </div>
+
+                <div class="resource-card">
+                    <h3>Top Brokerages</h3>
+                    <ul>
+                        <li><a href="https://www.fidelity.com/" target="_blank">Fidelity Investments</a></li>
+                        <li><a href="https://www.schwab.com/open-an-account?src=SEM&ef_id=EAIaIQobChMIotzb_7LjkwMVR4NaBR1y7hEZEAAYAiAAEgIDx_D_BwE:G:s&s_kwcid=AL!5158!3!665202962305!e!!g!!charles%20schwab%20open%20account!165717740!153618107480&keywordid=kwd-298894649961&gad_source=1&gad_campaignid=165717740&gbraid=0AAAAADhoFllhYIilASY1pOQMvfN3PSmXf&gclid=EAIaIQobChMIotzb_7LjkwMVR4NaBR1y7hEZEAAYAiAAEgIDx_D_BwE" target="_blank">Charles Schwab</a></li>
+                        <li><a href="https://interactivebrokers.com/" target="_blank">Interactive Brokers</a></li>
+                    </ul>
+                </div>
+
+                <div class="resource-card">
+                    <h3>Investing for Teens</h3>
+                    <ul>
+                        <li><a href="https://www.investopedia.com/investing-for-teens-7111843" target="_blank">Investopedia: Investing for Teens</a></li>
+                        <li><a href="https://www.investor.gov/additional-resources/spotlight/formerdirectorlorischock-directors-take/taking-stock-teen-trading" target="_blank">Investor.gov: Teen Trading</a></li>
+                        <li><a href="https://www.fidelity.com/learning-center/personal-finance/teach-teens-investing" target="_blank">Fidelity: Teach Teens Investing</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script type="module" src="/src/main.ts"></script>
+</body>
+</html>
