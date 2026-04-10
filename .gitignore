@@ -1,0 +1,7 @@
+node_modules/
+dist/
+.env
+.vercel/
+v1_backup/
+temp_vite/
+.DS_Store
