@@ -60,9 +60,8 @@ const TABLE_HEADERS = [
     { label: 'SECTOR', tooltip: 'Industrial sector.' }
 ];
 
-// Initial Execution
-initTableHeaders();
-initApp();
+// Logic initialized at the bottom of the file to ensure all functions are defined
+
 
 function initTableHeaders() {
     const thead = document.getElementById('tableHeaders');
@@ -256,7 +255,10 @@ function closeCustomModal() {
     showLoading(true);
     
     // Clear active preset state from all possible buttons
-    document.querySelectorAll('.btn-glass, .primary-glow').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.btn-glass, .primary-glow, .btn-glass.active').forEach(b => {
+        b.classList.remove('active');
+        b.style.boxShadow = 'none'; // Force visual clear
+    });
     currentScreener = 'custom';
     
     // Collect Filters
@@ -316,6 +318,10 @@ function closeCustomModal() {
         showLoading(false);
     }
 };
+
+// Application Boot
+initTableHeaders();
+initApp();
 
 (window as any).toggleCustomInput = (select: HTMLSelectElement) => {
     const container = select.parentElement?.querySelector('.f-custom-group') as HTMLElement;
