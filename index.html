@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TERMINAL SCREENER | Home</title>
+    <link rel="icon" type="image/png" href="/logo.png">
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
@@ -77,6 +78,22 @@
         .resource-card a:hover {
             color: var(--accent-blue);
         }
+
+        .main-content-box {
+            background: rgba(10, 10, 10, 0.85);
+            border: 1px solid var(--border-color);
+            padding: 3rem;
+            margin-top: 2rem;
+            position: relative;
+            z-index: 2;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+
+        @media (max-width: 600px) {
+            .main-content-box {
+                padding: 1.5rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -89,38 +106,40 @@
         <div class="logo">TERMINAL SCREENER</div>
     </header>
 
-    <main style="overflow: auto;">
+    <main style="overflow: auto; padding-bottom: 60px;">
         <div class="home-container">
-            <h1 class="home-title">Equity research made easy.</h1>
+            <div class="main-content-box">
+                <h1 class="home-title">Equity research made easy.</h1>
 
-            <a href="screener.html" class="go-to-screener">Go to Screener &rarr;</a>
+                <a href="screener.html" class="go-to-screener">Go to Screener &rarr;</a>
 
-            <div class="resources-grid">
-                <div class="resource-card">
-                    <h3>News & Market Data</h3>
-                    <ul>
-                        <li><a href="https://finance.yahoo.com/" target="_blank">Yahoo Finance</a></li>
-                        <li><a href="https://www.bloomberg.com/" target="_blank">Bloomberg</a></li>
-                        <li><a href="https://www.reuters.com/markets/" target="_blank">Reuters Markets</a></li>
-                    </ul>
-                </div>
+                <div class="resources-grid">
+                    <div class="resource-card">
+                        <h3>News & Market Data</h3>
+                        <ul>
+                            <li><a href="https://finance.yahoo.com/" target="_blank">Yahoo Finance</a></li>
+                            <li><a href="https://www.bloomberg.com/" target="_blank">Bloomberg</a></li>
+                            <li><a href="https://www.reuters.com/markets/" target="_blank">Reuters Markets</a></li>
+                        </ul>
+                    </div>
 
-                <div class="resource-card">
-                    <h3>Top Brokerages</h3>
-                    <ul>
-                        <li><a href="https://www.fidelity.com/" target="_blank">Fidelity Investments</a></li>
-                        <li><a href="https://www.schwab.com/open-an-account?src=SEM&ef_id=EAIaIQobChMIotzb_7LjkwMVR4NaBR1y7hEZEAAYAiAAEgIDx_D_BwE:G:s&s_kwcid=AL!5158!3!665202962305!e!!g!!charles%20schwab%20open%20account!165717740!153618107480&keywordid=kwd-298894649961&gad_source=1&gad_campaignid=165717740&gbraid=0AAAAADhoFllhYIilASY1pOQMvfN3PSmXf&gclid=EAIaIQobChMIotzb_7LjkwMVR4NaBR1y7hEZEAAYAiAAEgIDx_D_BwE" target="_blank">Charles Schwab</a></li>
-                        <li><a href="https://interactivebrokers.com/" target="_blank">Interactive Brokers</a></li>
-                    </ul>
-                </div>
+                    <div class="resource-card">
+                        <h3>Top Brokerages</h3>
+                        <ul>
+                            <li><a href="https://www.fidelity.com/" target="_blank">Fidelity Investments</a></li>
+                            <li><a href="https://www.schwab.com/open-an-account?src=SEM&ef_id=EAIaIQobChMIotzb_7LjkwMVR4NaBR1y7hEZEAAYAiAAEgIDx_D_BwE:G:s&s_kwcid=AL!5158!3!665202962305!e!!g!!charles%20schwab%20open%20account!165717740!153618107480&keywordid=kwd-298894649961&gad_source=1&gad_campaignid=165717740&gbraid=0AAAAADhoFllhYIilASY1pOQMvfN3PSmXf&gclid=EAIaIQobChMIotzb_7LjkwMVR4NaBR1y7hEZEAAYAiAAEgIDx_D_BwE" target="_blank">Charles Schwab</a></li>
+                            <li><a href="https://interactivebrokers.com/" target="_blank">Interactive Brokers</a></li>
+                        </ul>
+                    </div>
 
-                <div class="resource-card">
-                    <h3>Investing for Teens</h3>
-                    <ul>
-                        <li><a href="https://www.investopedia.com/investing-for-teens-7111843" target="_blank">Investopedia: Investing for Teens</a></li>
-                        <li><a href="https://www.investor.gov/additional-resources/spotlight/formerdirectorlorischock-directors-take/taking-stock-teen-trading" target="_blank">Investor.gov: Teen Trading</a></li>
-                        <li><a href="https://www.fidelity.com/learning-center/personal-finance/teach-teens-investing" target="_blank">Fidelity: Teach Teens Investing</a></li>
-                    </ul>
+                    <div class="resource-card">
+                        <h3>Investing for Teens</h3>
+                        <ul>
+                            <li><a href="https://www.investopedia.com/investing-for-teens-7111843" target="_blank">Investopedia: Investing for Teens</a></li>
+                            <li><a href="https://www.investor.gov/additional-resources/spotlight/formerdirectorlorischock-directors-take/taking-stock-teen-trading" target="_blank">Investor.gov: Teen Trading</a></li>
+                            <li><a href="https://www.fidelity.com/learning-center/personal-finance/teach-teens-investing" target="_blank">Fidelity: Teach Teens Investing</a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>

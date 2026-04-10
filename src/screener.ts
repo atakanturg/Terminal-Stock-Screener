@@ -49,10 +49,9 @@ const TABLE_HEADERS = [
     { label: 'SECTOR', tooltip: 'Industrial sector.' }
 ];
 
-document.addEventListener('DOMContentLoaded', () => {
-    initTableHeaders();
-    initApp();
-});
+// Initial Execution
+initTableHeaders();
+initApp();
 
 function initTableHeaders() {
     const thead = document.getElementById('tableHeaders');
@@ -69,6 +68,8 @@ function initTableHeaders() {
 }
 
 function initApp() {
+    console.log("ENGINE_CORE: ACTIVE - V2.1");
+    
     // Nav Click Handlers
     document.querySelectorAll('.btn-glass, .primary-glow').forEach(btn => {
         btn.addEventListener('click', (e) => {
@@ -99,6 +100,19 @@ function initApp() {
     if (closeBtn) {
         closeBtn.addEventListener('click', closeCustomModal);
     }
+    
+    // Custom Scan Handler
+    const execBtn = document.getElementById('executeAdvancedScan');
+    if (execBtn) {
+        execBtn.addEventListener('click', (window as any).runCustomScan);
+    }
+    
+    // Attach change listeners to predefined selects to toggle custom inputs
+    document.querySelectorAll('.f-premade').forEach(sel => {
+        sel.addEventListener('change', (e) => {
+            (window as any).toggleCustomInput(e.currentTarget as HTMLSelectElement);
+        });
+    });
 
     // Default Load
     refreshData();
@@ -269,18 +283,3 @@ function closeCustomModal() {
         container.style.display = select.value === 'custom' ? 'flex' : 'none';
     }
 };
-
-// Also attach Custom Scan handler here
-document.addEventListener('DOMContentLoaded', () => {
-    const execBtn = document.getElementById('executeAdvancedScan');
-    if (execBtn) {
-        execBtn.addEventListener('click', (window as any).runCustomScan);
-    }
-    
-    // Attach change listeners to predefined selects to toggle custom inputs
-    document.querySelectorAll('.f-premade').forEach(sel => {
-        sel.addEventListener('change', (e) => {
-            (window as any).toggleCustomInput(e.currentTarget as HTMLSelectElement);
-        });
-    });
-});
