@@ -311,13 +311,13 @@ th {
     position: relative;
 }
 
-/* Tooltip Position: BELOW as requested */
+/* Tooltip Position: Below and right */
 .tooltip-icon:hover::after {
     content: attr(data-tooltip);
     position: absolute;
-    top: 150%; /* Position below */
-    left: 50%;
-    transform: translateX(-50%);
+    top: 180%; /* Move down */
+    left: 10px; /* Move right */
+    transform: none;
     background: #333;
     color: #fff;
     padding: 10px 14px;
@@ -358,6 +358,7 @@ tr:hover td {
 .up { color: var(--success); font-weight: 600; }
 .down { color: var(--danger); font-weight: 600; }
 .ticker-col { font-weight: 700; color: #000; }
+.high-risk { color: var(--danger) !important; text-shadow: 0 0 5px rgba(220, 53, 69, 0.4); }
 
 /* Modal Styles */
 .modal-overlay {

@@ -38,7 +38,7 @@ let currentScreener = 'top_gainers';
 let exchangeFilter = 'ALL';
 
 const TABLE_HEADERS = [
-    { label: 'SYMBOL', tooltip: 'Unique ticker symbol.' },
+    { label: 'SYMBOL', tooltip: 'Unique ticker symbol. RED = High Risk (<$10 & Missing Stats).' },
     { label: 'NAME', tooltip: 'Company description.' },
     { label: 'PRICE', tooltip: 'Last traded price.' },
     { label: 'CHG%', tooltip: 'Daily % change.' },
@@ -165,14 +165,20 @@ function renderTable(symbols: TVSymbolData[]) {
         const change = parseFloat(d[COLS.CHANGE]);
         const changeClass = change >= 0 ? 'up' : 'down';
         const ticker = d[COLS.TICKER].split(':')[1] || d[COLS.TICKER];
+        
+        let highRiskClass = '';
+        const price = d[COLS.PRICE];
+        if (price != null && price < 10 && (d[COLS.PE] == null || d[COLS.CHANGE] == null || d[COLS.MARKET_CAP] == null || d[COLS.EPS_GROWTH] == null || d[COLS.DIV_YIELD] == null)) {
+            highRiskClass = 'high-risk';
+        }
 
         row.innerHTML = `
-            <td class="ticker-col">
+            <td class="ticker-col ${highRiskClass}">
                 ${ticker}
                 <a href="https://finance.yahoo.com/quote/${ticker}" target="_blank" style="font-size: 0.7rem; color: var(--accent-blue); text-decoration: none; margin-left: 5px;" title="View on Yahoo Finance">[News]</a>
             </td>
             <td>${d[COLS.NAME]}</td>
-            <td class="${changeClass}">${d[COLS.PRICE] != null ? '$' + d[COLS.PRICE].toFixed(2) : '—'}</td>
+            <td class="${changeClass}">${price != null ? '$' + price.toFixed(2) : '—'}</td>
             <td class="${changeClass}">${formatPct(change)}</td>
             <td>${formatMarketCap(d[COLS.MARKET_CAP])}</td>
             <td>${d[COLS.PE] != null ? d[COLS.PE].toFixed(2) : '—'}</td>

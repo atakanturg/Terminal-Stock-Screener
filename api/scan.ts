@@ -16,7 +16,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     try {
         const { market = 'america', filters = [], limit = 50, sortBy, sortOrder, exchange } = req.body;
         
-        let tvFilters: any[] = [{ left: 'change', operation: 'nequal', right: 0 }];
+        let tvFilters: any[] = [
+            { left: 'change', operation: 'nequal', right: 0 },
+            { left: 'average_volume_10d_calc', operation: 'greater', right: 25000 },
+            { left: 'close', operation: 'greater', right: 0.01 }
+        ];
         
         if (exchange && exchange !== 'ALL') {
             tvFilters.push({ left: 'exchange', operation: 'equal', right: exchange });
