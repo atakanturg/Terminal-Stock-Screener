@@ -94,7 +94,7 @@ async function switchScreener(id: string) {
 async function refreshData() {
     showLoading(true);
     try {
-        const url = `${API_BASE}/premade/${currentScreener}?exchange=${exchangeFilter}`;
+        const url = `${API_BASE}/premade?screener_id=${currentScreener}&exchange=${exchangeFilter}`;
         const res = await fetch(url);
         const data: ScanResponse = await res.json();
         renderTable(data.data);
