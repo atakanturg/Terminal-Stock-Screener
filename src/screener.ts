@@ -35,7 +35,18 @@ const COLS = {
 
 // Application State
 let currentScreener = 'top_gainers';
-let exchangeFilter = 'ALL';
+let exchangeFilter = 'NYSE';
+let marketFilter = 'america';
+
+const EXCHANGES_BY_MARKET: Record<string, string[]> = {
+    'america': ['ALL', 'NYSE', 'NASDAQ', 'AMEX', 'OTC'],
+    'uk': ['ALL', 'LSE', 'LSIN', 'QUOTE'],
+    'canada': ['ALL', 'TSX', 'TSXV', 'CSE', 'NEO'],
+    'germany': ['ALL', 'XETR', 'FWB', 'BER', 'MUN', 'HAM', 'DUS', 'STU'],
+    'france': ['ALL', 'EURONEXT', 'CBOE'],
+    'japan': ['ALL', 'TSE', 'OSE'],
+    'india': ['ALL', 'NSE', 'BSE']
+};
 
 const TABLE_HEADERS = [
     { label: 'SYMBOL', tooltip: 'RED name means EXTREMELY risky' },
@@ -80,6 +91,17 @@ function initApp() {
         });
     });
 
+    // Country Select
+    const countrySelect = document.getElementById('countrySelect') as HTMLSelectElement;
+    if (countrySelect) {
+        countrySelect.addEventListener('change', (e) => {
+            const country = (e.target as HTMLSelectElement).value;
+            marketFilter = country;
+            updateExchangeDropdown(country);
+            refreshData();
+        });
+    }
+
     // Exchange Select
     const exSelect = document.getElementById('exchangeSelect') as HTMLSelectElement;
     if (exSelect) {
@@ -87,6 +109,14 @@ function initApp() {
             exchangeFilter = (e.target as HTMLSelectElement).value;
             refreshData();
         });
+    }
+
+    function updateExchangeDropdown(country: string) {
+        const exchanges = EXCHANGES_BY_MARKET[country] || ['ALL'];
+        if (exSelect) {
+            exSelect.innerHTML = exchanges.map(ex => `<option value="${ex}" ${ex === 'ALL' ? 'selected' : ''}>${ex === 'ALL' ? 'ALL EXCHANGES' : ex}</option>`).join('');
+            exchangeFilter = (exSelect as any).value;
+        }
     }
 
     // Custom Button
@@ -135,7 +165,7 @@ async function switchScreener(id: string) {
 async function refreshData() {
     showLoading(true);
     try {
-        const url = `${API_BASE}/premade?screener_id=${currentScreener}&exchange=${exchangeFilter}`;
+        const url = `${API_BASE}/premade?screener_id=${currentScreener}&exchange=${exchangeFilter}&market=${marketFilter}`;
         const res = await fetch(url);
         if (!res.ok) throw new Error(`API returned status ${res.status}`);
         const data: ScanResponse = await res.json();
@@ -268,7 +298,7 @@ function closeCustomModal() {
         const res = await fetch(`${API_BASE}/scan`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ filters, exchange: exchangeFilter })
+            body: JSON.stringify({ filters, exchange: exchangeFilter, market: marketFilter })
         });
         if (!res.ok) throw new Error(`API returned status ${res.status}`);
         const data = await res.json();
