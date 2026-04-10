@@ -18,6 +18,10 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+}
+
+/* Force Sharp Corners Globally */
+button, input, select, .glass-panel, .btn-glass, .glass-input, .resource-card, .metric-badge, .badge, .tooltip-icon, .modal-content, .logo-container a {
     border-radius: 0 !important;
 }
 
@@ -311,12 +315,12 @@ th {
     position: relative;
 }
 
-/* Tooltip Position: Below and right */
+/* Tooltip Position: Significantly Below */
 .tooltip-icon:hover::after {
     content: attr(data-tooltip);
     position: absolute;
-    top: 180%; /* Move down */
-    left: 10px; /* Move right */
+    top: 250%; /* Adjusted lower */
+    left: 10px;
     transform: none;
     background: #333;
     color: #fff;

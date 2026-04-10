@@ -38,7 +38,7 @@ let currentScreener = 'top_gainers';
 let exchangeFilter = 'ALL';
 
 const TABLE_HEADERS = [
-    { label: 'SYMBOL', tooltip: 'Unique ticker symbol. RED = High Risk (<$10 & Missing Stats).' },
+    { label: 'SYMBOL', tooltip: 'RED name means EXTREMELY risky' },
     { label: 'NAME', tooltip: 'Company description.' },
     { label: 'PRICE', tooltip: 'Last traded price.' },
     { label: 'CHG%', tooltip: 'Daily % change.' },
@@ -177,7 +177,7 @@ function renderTable(symbols: TVSymbolData[]) {
                 ${ticker}
                 <a href="https://finance.yahoo.com/quote/${ticker}" target="_blank" style="font-size: 0.7rem; color: var(--accent-blue); text-decoration: none; margin-left: 5px;" title="View on Yahoo Finance">[News]</a>
             </td>
-            <td class="name-col">${d[COLS.NAME]}</td>
+            <td class="name-col" title="${d[COLS.NAME]}">${d[COLS.NAME]}</td>
             <td class="${changeClass}">${price != null ? '$' + price.toFixed(2) : '—'}</td>
             <td class="${changeClass}">${formatPct(change)}</td>
             <td>${formatMarketCap(d[COLS.MARKET_CAP])}</td>
@@ -225,8 +225,8 @@ function closeCustomModal() {
     closeCustomModal();
     showLoading(true);
     
-    // Clear active preset state
-    document.querySelectorAll('.btn-glass').forEach(b => b.classList.remove('active'));
+    // Clear active preset state from all possible buttons
+    document.querySelectorAll('.btn-glass, .primary-glow').forEach(b => b.classList.remove('active'));
     currentScreener = 'custom';
     
     // Collect Filters
