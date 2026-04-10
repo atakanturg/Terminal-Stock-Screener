@@ -18,6 +18,7 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    border-radius: 0 !important;
 }
 
 body {
@@ -356,7 +357,17 @@ tr:hover td {
 
 .up { color: var(--success); font-weight: 600; }
 .down { color: var(--danger); font-weight: 600; }
-.ticker-col { font-weight: 700; color: #000; }
+.ticker-col { font-weight: 700; color: #000; min-width: 80px; }
+.name-col { 
+    max-width: 220px; 
+    white-space: normal !important; 
+    line-height: 1.25; 
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    padding-right: 15px !important;
+}
 .high-risk { color: var(--danger) !important; text-shadow: 0 0 5px rgba(220, 53, 69, 0.4); }
 
 /* Modal Styles */
