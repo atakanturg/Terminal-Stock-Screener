@@ -45,7 +45,7 @@ function initApp() {
     // Nav Click Handlers
     document.querySelectorAll('.btn-glass, .primary-glow').forEach(btn => {
         btn.addEventListener('click', (e) => {
-            const id = (e.currentTarget as HTMLElement).dataset.screener;
+            const id = (e.currentTarget as HTMLElement).dataset.id;
             if (id) {
                 switchScreener(id);
             }
@@ -53,7 +53,7 @@ function initApp() {
     });
 
     // Exchange Select
-    const exSelect = document.getElementById('exchange-select') as HTMLSelectElement;
+    const exSelect = document.getElementById('exchangeSelect') as HTMLSelectElement;
     if (exSelect) {
         exSelect.addEventListener('change', (e) => {
             exchangeFilter = (e.target as HTMLSelectElement).value;
@@ -62,13 +62,13 @@ function initApp() {
     }
 
     // Custom Button
-    const customBtn = document.getElementById('btn-custom');
+    const customBtn = document.getElementById('openAdvancedFilter');
     if (customBtn) {
         customBtn.addEventListener('click', openCustomModal);
     }
 
     // Modal Close
-    const closeBtn = document.querySelector('.btn-close');
+    const closeBtn = document.getElementById('closeFilterModal');
     if (closeBtn) {
         closeBtn.addEventListener('click', closeCustomModal);
     }
@@ -81,7 +81,7 @@ async function switchScreener(id: string) {
     currentScreener = id;
     document.querySelectorAll('.btn-glass').forEach(b => b.classList.remove('active'));
     
-    const activeBtn = document.querySelector(`[data-screener="${id}"]`);
+    const activeBtn = document.querySelector(`[data-id="${id}"]`);
     if (activeBtn) activeBtn.classList.add('active');
 
     if (id === 'custom') {
@@ -114,7 +114,7 @@ async function refreshData() {
 }
 
 function renderTable(symbols: TVSymbolData[]) {
-    const tbody = document.getElementById('results-body');
+    const tbody = document.getElementById('resultsBody');
     if (!tbody) return;
     tbody.innerHTML = '';
 
@@ -152,22 +152,22 @@ function formatMarketCap(val: number) {
 }
 
 function showLoading(show: boolean) {
-    const overlay = document.getElementById('loading-overlay');
+    const overlay = document.getElementById('loadingOverlay');
     if (overlay) overlay.style.display = show ? 'flex' : 'none';
 }
 
 function updateStatus(count: number) {
-    const countEl = document.getElementById('result-count');
+    const countEl = document.getElementById('countLine');
     if (countEl) countEl.innerText = `${count} ASSETS INDEXED`;
 }
 
 function openCustomModal() {
-    const modal = document.getElementById('custom-modal');
+    const modal = document.getElementById('filterModal');
     if (modal) modal.style.display = 'flex';
 }
 
 function closeCustomModal() {
-    const modal = document.getElementById('custom-modal');
+    const modal = document.getElementById('filterModal');
     if (modal) modal.style.display = 'none';
 }
 
@@ -178,23 +178,31 @@ function closeCustomModal() {
     
     // Collect Filters
     const filters: any[] = [];
-    const rows = document.querySelectorAll('.filter-item');
+    const rows = document.querySelectorAll('.filter-row');
     rows.forEach(row => {
-        const field = (row as HTMLElement).dataset.field;
-        const premade = row.querySelector('.val-premade') as HTMLSelectElement;
-        const customContainer = row.querySelector('.custom-val-container') as HTMLElement;
-        const customInput = customContainer?.querySelector('input') as HTMLInputElement;
+        const fieldInput = row.querySelector('.f-field') as HTMLInputElement;
+        if (!fieldInput) return;
+        const field = fieldInput.value;
+        const premade = row.querySelector('.f-premade') as HTMLSelectElement;
+        const customContainer = row.querySelector('.f-custom-group') as HTMLElement;
+        const customInput = customContainer?.querySelector('.f-val') as HTMLInputElement;
+        const opSelect = customContainer?.querySelector('.f-op') as HTMLSelectElement;
 
         let val;
+        let op = '>';
         if (premade.value === 'custom') {
             val = parseFloat(customInput.value);
+            op = opSelect.value;
         } else if (premade.value !== 'any') {
-            val = parseFloat(premade.value);
+            const parts = premade.value.split('|');
+            if (parts.length === 2) {
+                op = parts[0];
+                val = parseFloat(parts[1]);
+            }
         }
 
-        if (val !== undefined && !isNaN(val)) {
-            // Price is index 3
-            filters.push({ field, op: '>', value: val });
+        if (val !== undefined && !isNaN(val) && field) {
+            filters.push({ field, op: op, value: val });
         }
     });
 
@@ -222,8 +230,23 @@ function closeCustomModal() {
 };
 
 (window as any).toggleCustomInput = (select: HTMLSelectElement) => {
-    const container = select.parentElement?.querySelector('.custom-val-container') as HTMLElement;
+    const container = select.parentElement?.querySelector('.f-custom-group') as HTMLElement;
     if (container) {
-        container.style.display = select.value === 'custom' ? 'block' : 'none';
+        container.style.display = select.value === 'custom' ? 'flex' : 'none';
     }
 };
+
+// Also attach Custom Scan handler here
+document.addEventListener('DOMContentLoaded', () => {
+    const execBtn = document.getElementById('executeAdvancedScan');
+    if (execBtn) {
+        execBtn.addEventListener('click', (window as any).runCustomScan);
+    }
+    
+    // Attach change listeners to predefined selects to toggle custom inputs
+    document.querySelectorAll('.f-premade').forEach(sel => {
+        sel.addEventListener('change', (e) => {
+            (window as any).toggleCustomInput(e.currentTarget as HTMLSelectElement);
+        });
+    });
+});
