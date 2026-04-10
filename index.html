@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
         .home-container {
-            max-width: 800px;
+            max-width: 1100px;
             margin: 60px auto;
             padding: 2rem;
         }
@@ -45,8 +45,9 @@
         .resources-grid {
             display: flex;
             flex-direction: row;
-            flex-wrap: wrap;
-            gap: 2rem;
+            flex-wrap: nowrap;
+            gap: 2.5rem;
+            justify-content: space-between;
         }
 
         .resource-card {
@@ -88,13 +89,17 @@
             z-index: 2;
             box-shadow: 0 20px 50px rgba(0,0,0,0.15);
             font-family: var(--font-mono);
+            border-radius: 0;
         }
 
         .main-content-box * {
             font-family: var(--font-mono) !important;
         }
 
-        @media (max-width: 600px) {
+            .resources-grid {
+                flex-wrap: wrap;
+                gap: 1.5rem;
+            }
             .main-content-box {
                 padding: 1.5rem;
             }

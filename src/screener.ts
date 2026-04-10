@@ -177,7 +177,7 @@ function renderTable(symbols: TVSymbolData[]) {
                 ${ticker}
                 <a href="https://finance.yahoo.com/quote/${ticker}" target="_blank" style="font-size: 0.7rem; color: var(--accent-blue); text-decoration: none; margin-left: 5px;" title="View on Yahoo Finance">[News]</a>
             </td>
-            <td>${d[COLS.NAME]}</td>
+            <td style="max-width: 250px; overflow: hidden; text-overflow: ellipsis;">${d[COLS.NAME]}</td>
             <td class="${changeClass}">${price != null ? '$' + price.toFixed(2) : '—'}</td>
             <td class="${changeClass}">${formatPct(change)}</td>
             <td>${formatMarketCap(d[COLS.MARKET_CAP])}</td>
@@ -224,6 +224,10 @@ function closeCustomModal() {
 (window as any).runCustomScan = async () => {
     closeCustomModal();
     showLoading(true);
+    
+    // Clear active preset state
+    document.querySelectorAll('.btn-glass').forEach(b => b.classList.remove('active'));
+    currentScreener = 'custom';
     
     // Collect Filters
     const filters: any[] = [];

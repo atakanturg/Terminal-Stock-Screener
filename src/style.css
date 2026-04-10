@@ -80,7 +80,7 @@ body {
     border: 1px solid var(--glass-border);
     color: var(--accent-blue);
     padding: 10px 14px;
-    border-radius: 6px;
+    border-radius: 0;
     font-family: var(--font-mono);
     font-weight: 600;
     outline: none;
@@ -153,7 +153,7 @@ main {
 /* Sidebar */
 .sidebar {
     width: 320px;
-    border-radius: 12px;
+    border-radius: 0;
     display: flex;
     flex-direction: column;
     gap: 2rem;
@@ -214,16 +214,15 @@ main {
 
 .system-stats {
     margin-top: auto;
-    background: rgba(255,255,255,0.5);
-    padding: 12px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
+    background: transparent;
+    padding: 12px 0;
+    border: none;
 }
 
 /* Results Content Area */
 .content-area {
     flex: 1;
-    border-radius: 12px;
+    border-radius: 0;
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -259,7 +258,7 @@ main {
 .metric-badge {
     background: #eee;
     padding: 4px 14px;
-    border-radius: 20px;
+    border-radius: 0;
     font-family: var(--font-mono);
     font-size: 0.75rem;
     color: var(--text-muted);
@@ -321,7 +320,7 @@ th {
     background: #333;
     color: #fff;
     padding: 10px 14px;
-    border-radius: 8px;
+    border-radius: 0;
     font-size: 0.75rem;
     font-family: var(--font-sans);
     letter-spacing: normal;
@@ -344,7 +343,7 @@ th {
 }
 
 td {
-    padding: 12px 16px;
+    padding: 12px 10px;
     border-bottom: 1px solid #eee;
     font-family: var(--font-mono);
     font-size: 0.8rem;
@@ -376,7 +375,7 @@ tr:hover td {
 .modal-content {
     width: 500px;
     padding: 2.5rem;
-    border-radius: 15px;
+    border-radius: 0;
 }
 
 .modal-header {
