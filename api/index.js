@@ -7,9 +7,11 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
-app.use(express.static(__dirname));
 
-const TV_URL = 'https://scanner.tradingview.com/america/scan';
+// Serve static files from /public ONLY in local development
+if (process.env.NODE_ENV !== 'production') {
+    app.use(express.static(path.join(__dirname, '../public')));
+}
 
 const ALL_COLUMNS = [
     'name', 'description', 'country', 'close', 'change', 'market_cap_basic',
