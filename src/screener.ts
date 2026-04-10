@@ -96,11 +96,18 @@ async function refreshData() {
     try {
         const url = `${API_BASE}/premade?screener_id=${currentScreener}&exchange=${exchangeFilter}`;
         const res = await fetch(url);
+        if (!res.ok) throw new Error(`API returned status ${res.status}`);
         const data: ScanResponse = await res.json();
-        renderTable(data.data);
-        updateStatus(data.count);
+        if (data && data.data) {
+            renderTable(data.data);
+            updateStatus(data.count);
+        } else {
+            throw new Error('Invalid data format received');
+        }
     } catch (err) {
         console.error('Data pull failed:', err);
+        const statusEl = document.getElementById('statusLine');
+        if (statusEl) statusEl.innerText = 'DATA FETCH FAILED - CHECK API';
     } finally {
         showLoading(false);
     }
@@ -197,11 +204,18 @@ function closeCustomModal() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ filters, exchange: exchangeFilter })
         });
+        if (!res.ok) throw new Error(`API returned status ${res.status}`);
         const data = await res.json();
-        renderTable(data.data);
-        updateStatus(data.count);
+        if (data && data.data) {
+            renderTable(data.data);
+            updateStatus(data.count);
+        } else {
+             throw new Error('Invalid data format received');
+        }
     } catch (err) {
         console.error('Custom scan error:', err);
+        const statusEl = document.getElementById('statusLine');
+        if (statusEl) statusEl.innerText = 'CUSTOM SCAN FAILED - CHECK API';
     } finally {
         showLoading(false);
     }
